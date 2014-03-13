@@ -2,8 +2,11 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package ch.hearc.arcgames;
+package ch.hearc.arcgames.jpa;
 
+import ch.hearc.arcgames.entities.NewsPK;
+import ch.hearc.arcgames.entities.News;
+import ch.hearc.arcgames.entities.User;
 import ch.hearc.arcgames.exceptions.NonexistentEntityException;
 import ch.hearc.arcgames.exceptions.PreexistingEntityException;
 import ch.hearc.arcgames.exceptions.RollbackFailureException;

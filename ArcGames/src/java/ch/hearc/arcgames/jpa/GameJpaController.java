@@ -2,8 +2,10 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package ch.hearc.arcgames;
+package ch.hearc.arcgames.jpa;
 
+import ch.hearc.arcgames.entities.Game;
+import ch.hearc.arcgames.entities.UserhasGame;
 import ch.hearc.arcgames.exceptions.IllegalOrphanException;
 import ch.hearc.arcgames.exceptions.NonexistentEntityException;
 import ch.hearc.arcgames.exceptions.RollbackFailureException;
