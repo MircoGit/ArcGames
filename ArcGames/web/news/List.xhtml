@@ -10,6 +10,7 @@
             <h:outputText value="#{bundle.ListNewsTitle}"></h:outputText>
         </ui:define>
         <ui:define name="body">
+            <h:link outcome="/login" value="Login in"/>
             <h:form styleClass="jsfcrud_list_form">
                 <h:panelGroup id="messagePanel" layout="block">
                     <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
@@ -66,9 +67,6 @@
                 </h:panelGroup>
                 <br />
                 <h:commandLink action="#{newsController.prepareCreate}" value="#{bundle.ListNewsCreateLink}"/>
-                <br />
-                <br />
-                <h:link outcome="/index" value="#{bundle.ListNewsIndexLink}"/>
             </h:form>
         </ui:define>
     </ui:composition>
