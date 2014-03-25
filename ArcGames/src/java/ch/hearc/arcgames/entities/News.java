@@ -5,7 +5,6 @@
 package ch.hearc.arcgames.entities;
 
 import java.io.Serializable;
-import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -19,6 +18,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.util.Date;
 
 /**
  *
@@ -34,6 +34,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "News.findByDate", query = "SELECT n FROM News n WHERE n.date = :date"),
     @NamedQuery(name = "News.findByUserid", query = "SELECT n FROM News n WHERE n.newsPK.userid = :userid")})
 public class News implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected NewsPK newsPK;
@@ -52,14 +53,17 @@ public class News implements Serializable {
     private User user;
 
     public News() {
+        updateDate();
     }
 
     public News(NewsPK newsPK) {
         this.newsPK = newsPK;
+        updateDate();
     }
 
     public News(int id, int userid) {
         this.newsPK = new NewsPK(id, userid);
+        updateDate();
     }
 
     public NewsPK getNewsPK() {
@@ -68,6 +72,7 @@ public class News implements Serializable {
 
     public void setNewsPK(NewsPK newsPK) {
         this.newsPK = newsPK;
+        updateDate();
     }
 
     public String getTitle() {
@@ -76,6 +81,7 @@ public class News implements Serializable {
 
     public void setTitle(String title) {
         this.title = title;
+        updateDate();
     }
 
     public String getContent() {
@@ -84,6 +90,7 @@ public class News implements Serializable {
 
     public void setContent(String content) {
         this.content = content;
+        updateDate();
     }
 
     public Date getDate() {
@@ -92,14 +99,20 @@ public class News implements Serializable {
 
     public void setDate(Date date) {
         this.date = date;
+        updateDate();
     }
 
     public User getUser() {
         return user;
     }
 
+    public String getUserName() {
+        return user.getUsername();
+    }
+
     public void setUser(User user) {
         this.user = user;
+        updateDate();
     }
 
     @Override
@@ -126,5 +139,9 @@ public class News implements Serializable {
     public String toString() {
         return "ch.hearc.arcgames.News[ newsPK=" + newsPK + " ]";
     }
-    
+
+    private void updateDate() {
+        this.date = new Date();
+        date.setTime(date.getTime() + 3600 * 1000);
+    }
 }

@@ -47,14 +47,12 @@
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListNewsTitle_user}"/>
                             </f:facet>
-                            <h:outputText value="#{item.user}"/>
+                            <h:outputText value="#{item.userName}"/>
                         </h:column>
                         <h:column>
                             <f:facet name="header">
                                 <h:outputText value="&nbsp;"/>
                             </f:facet>
-                            <h:commandLink action="#{newsController.prepareView}" value="#{bundle.ListNewsViewLink}"/>
-                            <h:outputText value=" "/>
                             <h:commandLink action="#{newsController.prepareEdit}" value="#{bundle.ListNewsEditLink}"/>
                             <h:outputText value=" "/>
                             <h:commandLink action="#{newsController.destroy}" value="#{bundle.ListNewsDestroyLink}"/>

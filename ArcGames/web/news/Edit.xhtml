@@ -15,16 +15,10 @@
             </h:panelGroup>
             <h:form>
                 <h:panelGrid columns="2">
-                    <h:outputLabel value="#{bundle.EditNewsLabel_newsPK_id}" for="newsPK_id" />
-                    <h:inputText id="newsPK_id" value="#{newsController.selected.newsPK.id}" title="#{bundle.EditNewsTitle_newsPK_id}" required="true" requiredMessage="#{bundle.EditNewsRequiredMessage_newsPK_id}"/>
                     <h:outputLabel value="#{bundle.EditNewsLabel_title}" for="title" />
                     <h:inputText id="title" value="#{newsController.selected.title}" title="#{bundle.EditNewsTitle_title}" />
                     <h:outputLabel value="#{bundle.EditNewsLabel_content}" for="content" />
                     <h:inputTextarea rows="4" cols="30" id="content" value="#{newsController.selected.content}" title="#{bundle.EditNewsTitle_content}" />
-                    <h:outputLabel value="#{bundle.EditNewsLabel_date}" for="date" />
-                    <h:inputText id="date" value="#{newsController.selected.date}" title="#{bundle.EditNewsTitle_date}" >
-                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
-                    </h:inputText>
                     <h:outputLabel value="#{bundle.EditNewsLabel_user}" for="user" />
                     <h:selectOneMenu id="user" value="#{newsController.selected.user}" title="#{bundle.EditNewsTitle_user}" required="true" requiredMessage="#{bundle.EditNewsRequiredMessage_user}">
                         <f:selectItems value="#{userController.itemsAvailableSelectOne}"/>
@@ -33,12 +27,9 @@
                 <h:commandLink action="#{newsController.update}" value="#{bundle.EditNewsSaveLink}"/>
                 <br />
                 <br />
-                <h:link outcome="View" value="#{bundle.EditNewsViewLink}"/>
-                <br />
                 <h:commandLink action="#{newsController.prepareList}" value="#{bundle.EditNewsShowAllLink}" immediate="true"/>
                 <br />
                 <br />
-                <h:link outcome="/index" value="#{bundle.EditNewsIndexLink}" />
             </h:form>
         </ui:define>
     </ui:composition>
