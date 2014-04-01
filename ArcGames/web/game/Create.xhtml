@@ -15,8 +15,6 @@
             </h:panelGroup>
             <h:form>
                 <h:panelGrid columns="2">
-                    <h:outputLabel value="#{bundle.CreateGameLabel_id}" for="id" />
-                    <h:inputText id="id" value="#{gameController.selected.id}" title="#{bundle.CreateGameTitle_id}" required="true" requiredMessage="#{bundle.CreateGameRequiredMessage_id}"/>
                     <h:outputLabel value="#{bundle.CreateGameLabel_name}" for="name" />
                     <h:inputText id="name" value="#{gameController.selected.name}" title="#{bundle.CreateGameTitle_name}" />
                     <h:outputLabel value="#{bundle.CreateGameLabel_description}" for="description" />
