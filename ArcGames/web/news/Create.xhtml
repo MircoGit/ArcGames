@@ -15,16 +15,10 @@
             </h:panelGroup>
             <h:form>
                 <h:panelGrid columns="2">
-                    <h:outputLabel value="#{bundle.CreateNewsLabel_newsPK_id}" for="newsPK_id" />
-                    <h:inputText id="newsPK_id" value="#{newsController.selected.newsPK.id}" title="#{bundle.CreateNewsTitle_newsPK_id}" required="true" requiredMessage="#{bundle.CreateNewsRequiredMessage_newsPK_id}"/>
                     <h:outputLabel value="#{bundle.CreateNewsLabel_title}" for="title" />
                     <h:inputText id="title" value="#{newsController.selected.title}" title="#{bundle.CreateNewsTitle_title}" />
                     <h:outputLabel value="#{bundle.CreateNewsLabel_content}" for="content" />
                     <h:inputTextarea rows="4" cols="30" id="content" value="#{newsController.selected.content}" title="#{bundle.CreateNewsTitle_content}" />
-                    <h:outputLabel value="#{bundle.CreateNewsLabel_date}" for="date" />
-                    <h:inputText id="date" value="#{newsController.selected.date}" title="#{bundle.CreateNewsTitle_date}" >
-                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
-                    </h:inputText>
                     <h:outputLabel value="#{bundle.CreateNewsLabel_user}" for="user" />
                     <h:selectOneMenu id="user" value="#{newsController.selected.user}" title="#{bundle.CreateNewsTitle_user}" required="true" requiredMessage="#{bundle.CreateNewsRequiredMessage_user}">
                         <f:selectItems value="#{userController.itemsAvailableSelectOne}"/>
@@ -37,7 +31,6 @@
                 <h:commandLink action="#{newsController.prepareList}" value="#{bundle.CreateNewsShowAllLink}" immediate="true"/>
                 <br />
                 <br />
-                <h:link outcome="/index" value="#{bundle.CreateNewsIndexLink}"/>
             </h:form>
         </ui:define>
     </ui:composition>

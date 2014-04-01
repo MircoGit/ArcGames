@@ -12,7 +12,7 @@
         <ui:define name="body">
             <h:link outcome="/login" value="Login in"/>
             <h:outputText value=" " />
-            <h:link outcome="/signin" value="Sign in"/>
+            <h:link outcome="/signup" value="Sign up"/>
             <h:form styleClass="jsfcrud_list_form">
                 <h:panelGroup id="messagePanel" layout="block">
                     <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
@@ -23,12 +23,6 @@
                     <h:commandLink action="#{newsController.previous}" value="#{bundle.Previous} #{newsController.pagination.pageSize}" rendered="#{newsController.pagination.hasPreviousPage}"/>&nbsp;
                     <h:commandLink action="#{newsController.next}" value="#{bundle.Next} #{newsController.pagination.pageSize}" rendered="#{newsController.pagination.hasNextPage}"/>&nbsp;
                     <h:dataTable value="#{newsController.items}" var="item" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px">
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListNewsTitle_newsPK_id}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.newsPK.id}"/>
-                        </h:column>
                         <h:column>
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListNewsTitle_title}"/>
@@ -53,14 +47,12 @@
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListNewsTitle_user}"/>
                             </f:facet>
-                            <h:outputText value="#{item.user}"/>
+                            <h:outputText value="#{item.userName}"/>
                         </h:column>
                         <h:column>
                             <f:facet name="header">
                                 <h:outputText value="&nbsp;"/>
                             </f:facet>
-                            <h:commandLink action="#{newsController.prepareView}" value="#{bundle.ListNewsViewLink}"/>
-                            <h:outputText value=" "/>
                             <h:commandLink action="#{newsController.prepareEdit}" value="#{bundle.ListNewsEditLink}"/>
                             <h:outputText value=" "/>
                             <h:commandLink action="#{newsController.destroy}" value="#{bundle.ListNewsDestroyLink}"/>
