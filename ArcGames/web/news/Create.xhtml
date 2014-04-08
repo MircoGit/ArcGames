@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
@@ -36,3 +37,43 @@
     </ui:composition>
 
 </html>
+=======
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.CreateNewsTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.CreateNewsLabel_title}" for="title" />
+                    <h:inputText id="title" value="#{newsController.selected.title}" title="#{bundle.CreateNewsTitle_title}" />
+                    <h:outputLabel value="#{bundle.CreateNewsLabel_content}" for="content" />
+                    <h:inputTextarea rows="4" cols="30" id="content" value="#{newsController.selected.content}" title="#{bundle.CreateNewsTitle_content}" />
+                    <h:outputLabel value="#{bundle.CreateNewsLabel_user}" for="user" />
+                    <h:selectOneMenu id="user" value="#{newsController.selected.user}" title="#{bundle.CreateNewsTitle_user}" required="true" requiredMessage="#{bundle.CreateNewsRequiredMessage_user}">
+                        <f:selectItems value="#{userController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{newsController.create}" value="#{bundle.CreateNewsSaveLink}" />
+                <br />
+                <br />
+                <h:commandLink action="#{newsController.prepareList}" value="#{bundle.CreateNewsShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>
+>>>>>>> 47a0872206c13761b94012f11e77c80cc8e4e60f
