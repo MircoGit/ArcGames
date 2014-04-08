@@ -25,12 +25,7 @@
                 <h:commandLink action="#{gameController.update}" value="#{bundle.EditGameSaveLink}"/>
                 <br />
                 <br />
-                <h:link outcome="View" value="#{bundle.EditGameViewLink}"/>
-                <br />
-                <h:commandLink action="#{gameController.prepareList}" value="#{bundle.EditGameShowAllLink}" immediate="true"/>
-                <br />
-                <br />
-                <h:link outcome="/index" value="#{bundle.EditGameIndexLink}" />
+                <h:commandLink action="#{gameController.prepareList}" value="Cancel" immediate="true"/>
             </h:form>
         </ui:define>
     </ui:composition>
