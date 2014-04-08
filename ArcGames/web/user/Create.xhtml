@@ -15,24 +15,16 @@
             </h:panelGroup>
             <h:form>
                 <h:panelGrid columns="2">
-                    <h:outputLabel value="#{bundle.CreateUserLabel_id}" for="id" />
-                    <h:inputText id="id" value="#{userController.selected.id}" title="#{bundle.CreateUserTitle_id}" required="true" requiredMessage="#{bundle.CreateUserRequiredMessage_id}"/>
                     <h:outputLabel value="#{bundle.CreateUserLabel_username}" for="username" />
                     <h:inputText id="username" value="#{userController.selected.username}" title="#{bundle.CreateUserTitle_username}" />
                     <h:outputLabel value="#{bundle.CreateUserLabel_mail}" for="mail" />
                     <h:inputText id="mail" value="#{userController.selected.mail}" title="#{bundle.CreateUserTitle_mail}" required="true" requiredMessage="#{bundle.CreateUserRequiredMessage_mail}"/>
                     <h:outputLabel value="#{bundle.CreateUserLabel_passwd}" for="passwd" />
-                    <h:inputText id="passwd" value="#{userController.selected.passwd}" title="#{bundle.CreateUserTitle_passwd}" />
-                    <h:outputLabel value="#{bundle.CreateUserLabel_dateOfBirth}" for="dateOfBirth" />
-                    <h:inputText id="dateOfBirth" value="#{userController.selected.dateOfBirth}" title="#{bundle.CreateUserTitle_dateOfBirth}" >
-                        <f:convertDateTime pattern="MM/dd/yyyy" />
-                    </h:inputText>
+                    <h:inputSecret id="passwd" value="" title="#{bundle.CreateUserTitle_passwd}" />
+                    <h:outputLabel value="Password confirm" for="passwdConfirm" />
+                    <h:inputSecret id="passwdConfirm" value="" title="PasswordConfirm" />
                     <h:outputLabel value="#{bundle.CreateUserLabel_location}" for="location" />
                     <h:inputText id="location" value="#{userController.selected.location}" title="#{bundle.CreateUserTitle_location}" />
-                    <h:outputLabel value="#{bundle.CreateUserLabel_isMailVisible}" for="isMailVisible" />
-                    <h:inputText id="isMailVisible" value="#{userController.selected.isMailVisible}" title="#{bundle.CreateUserTitle_isMailVisible}" />
-                    <h:outputLabel value="#{bundle.CreateUserLabel_isAdmin}" for="isAdmin" />
-                    <h:inputText id="isAdmin" value="#{userController.selected.isAdmin}" title="#{bundle.CreateUserTitle_isAdmin}" />
                     <h:outputLabel value="#{bundle.CreateUserLabel_firstName}" for="firstName" />
                     <h:inputText id="firstName" value="#{userController.selected.firstName}" title="#{bundle.CreateUserTitle_firstName}" />
                     <h:outputLabel value="#{bundle.CreateUserLabel_lastName}" for="lastName" />
@@ -42,10 +34,9 @@
                 <h:commandLink action="#{userController.create}" value="#{bundle.CreateUserSaveLink}" />
                 <br />
                 <br />
-                <h:commandLink action="#{userController.prepareList}" value="#{bundle.CreateUserShowAllLink}" immediate="true"/>
+                <h:link outcome="/news/List" value="Cancel"/>
                 <br />
                 <br />
-                <h:link outcome="/index" value="#{bundle.CreateUserIndexLink}"/>
             </h:form>
         </ui:define>
     </ui:composition>
