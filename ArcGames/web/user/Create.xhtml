@@ -20,9 +20,10 @@
                     <h:outputLabel value="#{bundle.CreateUserLabel_mail}" for="mail" />
                     <h:inputText id="mail" value="#{userController.selected.mail}" title="#{bundle.CreateUserTitle_mail}" required="true" requiredMessage="#{bundle.CreateUserRequiredMessage_mail}"/>
                     <h:outputLabel value="#{bundle.CreateUserLabel_passwd}" for="passwd" />
-                    <h:inputSecret id="passwd" value="" title="#{bundle.CreateUserTitle_passwd}" />
+                    <h:inputSecret id="passwd" value="#{userController.selected.passwd}" title="#{bundle.CreateUserTitle_passwd}" validator="#{userController.savePasswd}" />
                     <h:outputLabel value="Password confirm" for="passwdConfirm" />
-                    <h:inputSecret id="passwdConfirm" value="" title="PasswordConfirm" />
+                    <h:inputSecret id="passwdConfirm" value="#{userController.selected.passwd}" title="PasswordConfirm" validator="#{userController.validatePasswd}">
+                    </h:inputSecret>
                     <h:outputLabel value="#{bundle.CreateUserLabel_location}" for="location" />
                     <h:inputText id="location" value="#{userController.selected.location}" title="#{bundle.CreateUserTitle_location}" />
                     <h:outputLabel value="#{bundle.CreateUserLabel_firstName}" for="firstName" />

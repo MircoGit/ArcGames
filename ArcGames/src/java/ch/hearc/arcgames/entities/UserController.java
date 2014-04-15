@@ -8,6 +8,7 @@ import java.util.ResourceBundle;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
@@ -15,6 +16,7 @@ import javax.faces.convert.FacesConverter;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
+import javax.faces.validator.ValidatorException;
 
 @Named("userController")
 @SessionScoped
@@ -225,6 +227,20 @@ public class UserController implements Serializable {
             } else {
                 throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: " + User.class.getName());
             }
+        }
+    }
+    
+    
+    public void savePasswd(FacesContext context, UIComponent toValidate, Object value) {
+        current.setPasswd((String) value);
+    }
+
+    public void validatePasswd(FacesContext context, UIComponent toValidate, Object value) {
+        String confirmPasswd = (String) value;
+        
+        if (!confirmPasswd.equals(current.getPasswd())) {
+            FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Passwd invalid : "+confirmPasswd + " " +current.getPasswd(), "Passwd invalid : "+confirmPasswd+" "+current.getPasswd());
+            throw new ValidatorException(m);
         }
     }
 }

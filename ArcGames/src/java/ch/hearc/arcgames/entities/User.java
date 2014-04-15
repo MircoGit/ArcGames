@@ -7,6 +7,11 @@ package ch.hearc.arcgames.entities;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
+import javax.enterprise.context.spi.Context;
+import javax.faces.application.FacesMessage;
+import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
+import javax.faces.validator.ValidatorException;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -69,9 +74,9 @@ public class User implements Serializable {
     @Column(name = "location")
     private String location;
     @Column(name = "isMailVisible")
-    private Boolean isMailVisible;
+    private Boolean isMailVisible = true;
     @Column(name = "isAdmin")
-    private Boolean isAdmin;
+    private Boolean isAdmin = false;
     @Size(max = 45)
     @Column(name = "firstName")
     private String firstName;
