@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
     <ui:composition template="/template.xhtml">
         <ui:define name="title">
@@ -12,8 +13,22 @@
         <ui:define name="body">
 
             <h:form>
-                <h:inputText id="search" value="#{userController.usernameSearch}"  />
-                <h:commandLink action="#{userController.search}" value="Search"/>
+                <h:panelGrid columns="2">
+
+                    <h:outputText value="Username : " />
+                    <h:inputText id="search" value="#{userController.usernameSearch}"  />
+                    <h:commandLink action="#{userController.search}" value="Search"/>
+                    <h:commandLink action="#{userController.searchMode}" value="Advanced..."/>
+                    <c:if test="#{userController.mode}">
+                        <h:outputText value="Firstname : " />
+                        <h:inputText id="firstNameSearch" value="#{userController.firstNameSearch}"  />
+                        <h:outputText value="Lastname : " />
+                        <h:inputText id="lastNameSearch" value="#{userController.lastNameSearch}"  />
+                        <h:outputText value="Location : " />
+                        <h:inputText id="locationSearch" value="#{userController.locationSearch}"  />
+                        <h:commandLink action="#{userController.advancedSearch}" value="Search"/>
+                    </c:if>
+                </h:panelGrid>
             </h:form>
 
             <h:form styleClass="jsfcrud_list_form">
@@ -26,12 +41,7 @@
                     <h:commandLink action="#{userController.previous}" value="#{bundle.Previous} #{userController.pagination.pageSize}" rendered="#{userController.pagination.hasPreviousPage}"/>&nbsp;
                     <h:commandLink action="#{userController.next}" value="#{bundle.Next} #{userController.pagination.pageSize}" rendered="#{userController.pagination.hasNextPage}"/>&nbsp;
                     <h:dataTable value="#{userController.items}" var="item" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px">
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListUserTitle_id}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.id}"/>
-                        </h:column>
+                        
                         <h:column>
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListUserTitle_username}"/>
@@ -46,35 +56,9 @@
                         </h:column>
                         <h:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListUserTitle_passwd}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.passwd}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListUserTitle_dateOfBirth}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.dateOfBirth}">
-                                <f:convertDateTime pattern="MM/dd/yyyy" />
-                            </h:outputText>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
                                 <h:outputText value="#{bundle.ListUserTitle_location}"/>
                             </f:facet>
                             <h:outputText value="#{item.location}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListUserTitle_isMailVisible}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.isMailVisible}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListUserTitle_isAdmin}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.isAdmin}"/>
                         </h:column>
                         <h:column>
                             <f:facet name="header">

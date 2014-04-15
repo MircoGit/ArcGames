@@ -36,7 +36,43 @@ public class UserController implements Serializable {
     String loginPasswd;
     int sessionId = 0;
     String usernameSearch = "";
+    String firstNameSearch = "";
+    String lastNameSearch = "";
+    String locationSearch = "";
     List<User> result = new ArrayList<User>();
+    boolean mode = false;
+
+    public String getLastNameSearch() {
+        return lastNameSearch;
+    }
+
+    public void setLastNameSearch(String lastNameSearch) {
+        this.lastNameSearch = lastNameSearch;
+    }
+
+    public String getLocationSearch() {
+        return locationSearch;
+    }
+
+    public void setLocationSearch(String locationSearch) {
+        this.locationSearch = locationSearch;
+    }
+
+    public String getFirstNameSearch() {
+        return firstNameSearch;
+    }
+
+    public void setFirstNameSearch(String firstNameSearch) {
+        this.firstNameSearch = firstNameSearch;
+    }
+
+    public boolean isMode() {
+        return mode;
+    }
+
+    public void setMode(boolean mode) {
+        this.mode = mode;
+    }
 
     public String getUsernameSearch() {
         return usernameSearch;
@@ -86,7 +122,11 @@ public class UserController implements Serializable {
     }
 
     public PaginationHelper getPagination() {
-        search();
+        if (mode) {
+            advancedSearch();
+        } else {
+            search();
+        }
         if (pagination == null) {
             pagination = new PaginationHelper(10) {
                 @Override
@@ -311,6 +351,26 @@ public class UserController implements Serializable {
         for (User u : users) {
             if (u.getUsername().contains(usernameSearch) || usernameSearch.equals("")) {
                 result.add(u);
+            }
+        }
+    }
+
+    public void searchMode() {
+        mode = !mode;
+    }
+
+    public void advancedSearch() {
+        result.clear();
+
+
+        List<User> users = getFacade().findAll();
+        for (User u : users) {
+            if ((u.getFirstName().toLowerCase().contains(firstNameSearch.toLowerCase()) || firstNameSearch.equals(""))
+                    && (u.getUsername().toLowerCase().contains(usernameSearch.toLowerCase()) || usernameSearch.equals(""))
+                    && (u.getLastName().toLowerCase().contains(lastNameSearch.toLowerCase()) || lastNameSearch.equals(""))
+                    && (u.getLocation().toLowerCase().contains(locationSearch.toLowerCase()) || locationSearch.equals(""))) {
+                result.add(u);
+
             }
         }
     }
