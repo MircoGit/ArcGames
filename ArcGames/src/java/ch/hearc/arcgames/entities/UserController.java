@@ -4,10 +4,12 @@ import ch.hearc.arcgames.entities.util.JsfUtil;
 import ch.hearc.arcgames.entities.util.PaginationHelper;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
+import javax.enterprise.context.spi.Context;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -17,6 +19,7 @@ import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
 import javax.faces.validator.ValidatorException;
+import org.apache.jasper.tagplugins.jstl.ForEach;
 
 @Named("userController")
 @SessionScoped
@@ -28,6 +31,24 @@ public class UserController implements Serializable {
     private ch.hearc.arcgames.entities.UserFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
+    String login;
+    String loginPasswd;
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public String getLoginPasswd() {
+        return loginPasswd;
+    }
+
+    public void setLoginPasswd(String loginPasswd) {
+        this.loginPasswd = loginPasswd;
+    }
 
     public UserController() {
     }
@@ -229,18 +250,31 @@ public class UserController implements Serializable {
             }
         }
     }
-    
-    
+
     public void savePasswd(FacesContext context, UIComponent toValidate, Object value) {
         current.setPasswd((String) value);
     }
 
     public void validatePasswd(FacesContext context, UIComponent toValidate, Object value) {
         String confirmPasswd = (String) value;
-        
+
         if (!confirmPasswd.equals(current.getPasswd())) {
-            FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Passwd invalid : "+confirmPasswd + " " +current.getPasswd(), "Passwd invalid : "+confirmPasswd+" "+current.getPasswd());
+            FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_ERROR, "invalid password", "invalid password");
             throw new ValidatorException(m);
         }
+    }
+
+    public String checkLogin() {
+        boolean isOk = false;
+        List<User> users = getFacade().findAll();
+        for (User u : users) {
+            if (u.getUsername().equals(login) && u.getPasswd().equals(loginPasswd)) {
+                isOk = true;
+            }
+        }
+        if (!isOk) {
+            return null;
+        }
+        return "news/List";
     }
 }
