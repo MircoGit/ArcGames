@@ -33,7 +33,18 @@ public class UserController implements Serializable {
     private int selectedItemIndex;
     String login;
     String loginPasswd;
+    int sessionId = 0;
 
+    public int getSessionId() {
+        return sessionId;
+    }
+
+    public void setSessionId(int sessionId) {
+        this.sessionId = sessionId;
+    }
+
+    
+    
     public String getLogin() {
         return login;
     }
@@ -265,16 +276,13 @@ public class UserController implements Serializable {
     }
 
     public String checkLogin() {
-        boolean isOk = false;
         List<User> users = getFacade().findAll();
         for (User u : users) {
             if (u.getUsername().equals(login) && u.getPasswd().equals(loginPasswd)) {
-                isOk = true;
+                sessionId = u.getId();
+                return "news/List";
             }
         }
-        if (!isOk) {
-            return null;
-        }
-        return "news/List";
+        return null;
     }
 }
