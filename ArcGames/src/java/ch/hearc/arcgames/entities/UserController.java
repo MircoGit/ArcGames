@@ -4,6 +4,7 @@ import ch.hearc.arcgames.entities.util.JsfUtil;
 import ch.hearc.arcgames.entities.util.PaginationHelper;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
@@ -34,6 +35,16 @@ public class UserController implements Serializable {
     String login;
     String loginPasswd;
     int sessionId = 0;
+    String usernameSearch = "";
+    List<User> result = new ArrayList<User>();
+
+    public String getUsernameSearch() {
+        return usernameSearch;
+    }
+
+    public void setUsernameSearch(String usernameSearch) {
+        this.usernameSearch = usernameSearch;
+    }
 
     public int getSessionId() {
         return sessionId;
@@ -43,8 +54,6 @@ public class UserController implements Serializable {
         this.sessionId = sessionId;
     }
 
-    
-    
     public String getLogin() {
         return login;
     }
@@ -77,16 +86,19 @@ public class UserController implements Serializable {
     }
 
     public PaginationHelper getPagination() {
+        search();
         if (pagination == null) {
             pagination = new PaginationHelper(10) {
                 @Override
                 public int getItemsCount() {
-                    return getFacade().count();
+                    //return getFacade().count();
+                    return result.size();
                 }
 
                 @Override
                 public DataModel createPageDataModel() {
-                    return new ListDataModel(getFacade().findRange(new int[]{getPageFirstItem(), getPageFirstItem() + getPageSize()}));
+                    // return new ListDataModel(getFacade().findRange(new int[]{getPageFirstItem(), getPageFirstItem() + getPageSize()}));
+                    return new ListDataModel(result);
                 }
             };
         }
@@ -94,6 +106,7 @@ public class UserController implements Serializable {
     }
 
     public String prepareList() {
+
         recreateModel();
         return "List";
     }
@@ -188,6 +201,7 @@ public class UserController implements Serializable {
         if (items == null) {
             items = getPagination().createPageDataModel();
         }
+
         return items;
     }
 
@@ -285,10 +299,19 @@ public class UserController implements Serializable {
         }
         return null;
     }
-    
-    public String logout()
-    {
+
+    public String logout() {
         sessionId = 0;
         return "/news/List";
+    }
+
+    public void search() {
+        result.clear();
+        List<User> users = getFacade().findAll();
+        for (User u : users) {
+            if (u.getUsername().contains(usernameSearch) || usernameSearch.equals("")) {
+                result.add(u);
+            }
+        }
     }
 }
