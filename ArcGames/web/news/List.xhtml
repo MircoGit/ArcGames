@@ -10,14 +10,8 @@
             <h:outputText value="#{bundle.ListNewsTitle}"></h:outputText>
         </ui:define>
         <ui:define name="body">
-            <h:link outcome="/login" value="Login in"/>
-            <h:outputText value=" " />
-            <h:link outcome="/user/Create" value="Sign up"/>
-            <br />
             <br />
             
-            <h:outputText value="#{userController.sessionId}"></h:outputText>
-
             <h:link outcome="/game/List" value="Games"/>
             <br />
             <h:link outcome="/user/List" value="Users"/>

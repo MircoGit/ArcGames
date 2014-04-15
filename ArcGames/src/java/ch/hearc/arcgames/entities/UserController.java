@@ -285,4 +285,10 @@ public class UserController implements Serializable {
         }
         return null;
     }
+    
+    public String logout()
+    {
+        sessionId = 0;
+        return "/news/List";
+    }
 }
