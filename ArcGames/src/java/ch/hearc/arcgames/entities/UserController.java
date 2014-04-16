@@ -379,4 +379,15 @@ public class UserController implements Serializable {
         }
         return getFacade().find(sessionId).getIsAdmin();
     }
+    
+    public String getCurrentUserName()
+    {
+        return getFacade().find(sessionId).getUsername();
+    }
+    
+    public String editCurrentProfile()
+    {
+        current = getFacade().find(sessionId);
+        return "/user/Edit";
+    }
 }

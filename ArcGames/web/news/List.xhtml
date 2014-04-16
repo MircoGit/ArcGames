@@ -61,9 +61,9 @@
                                 <f:facet name="header">
                                     <h:outputText value="&nbsp;"/>
                                 </f:facet>
-                                <h:commandLink action="#{newsController.prepareEdit}" value="#{bundle.ListNewsEditLink}"/>
+                                <h:commandButton action="#{newsController.prepareEdit}" value="#{bundle.ListNewsEditLink}"/>
                                 <h:outputText value=" "/>
-                                <h:commandLink action="#{newsController.destroy}" value="#{bundle.ListNewsDestroyLink}"/>
+                                <h:commandButton action="#{newsController.destroy}" value="#{bundle.ListNewsDestroyLink}"/>
                             </h:column>
 
                         </c:if>
@@ -73,7 +73,7 @@
                 </h:panelGroup>
                 <br />
                 <c:if test="#{userController.isAdmin()}">
-                    <h:commandLink action="#{newsController.prepareCreate}" value="#{bundle.ListNewsCreateLink}"/>
+                    <h:commandButton action="#{newsController.prepareCreate}" value="#{bundle.ListNewsCreateLink}"/>
                 </c:if>
             </h:form>
         </ui:define>

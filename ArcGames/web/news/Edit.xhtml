@@ -19,12 +19,8 @@
                     <h:inputText id="title" value="#{newsController.selected.title}" title="#{bundle.EditNewsTitle_title}" />
                     <h:outputLabel value="#{bundle.EditNewsLabel_content}" for="content" />
                     <h:inputTextarea rows="4" cols="30" id="content" value="#{newsController.selected.content}" title="#{bundle.EditNewsTitle_content}" />
-                    <h:outputLabel value="#{bundle.EditNewsLabel_user}" for="user" />
-                    <h:selectOneMenu id="user" value="#{newsController.selected.user}" title="#{bundle.EditNewsTitle_user}" required="true" requiredMessage="#{bundle.EditNewsRequiredMessage_user}">
-                        <f:selectItems value="#{userController.itemsAvailableSelectOne}"/>
-                    </h:selectOneMenu>
                 </h:panelGrid>
-                <h:commandLink action="#{newsController.update}" value="#{bundle.EditNewsSaveLink}"/>
+                <h:commandButton action="#{newsController.update}" value="#{bundle.EditNewsSaveLink}"/>
                 <br />
                 <br />
                 <h:commandLink action="#{newsController.prepareList}" value="#{bundle.EditNewsShowAllLink}" immediate="true"/>

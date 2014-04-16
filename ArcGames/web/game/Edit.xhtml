@@ -22,7 +22,7 @@
                     <h:outputLabel value="#{bundle.EditGameLabel_link}" for="link" />
                     <h:inputText id="link" value="#{gameController.selected.link}" title="#{bundle.EditGameTitle_link}" />
                 </h:panelGrid>
-                <h:commandLink action="#{gameController.update}" value="#{bundle.EditGameSaveLink}"/>
+                <h:commandButton action="#{gameController.update}" value="#{bundle.EditGameSaveLink}"/>
                 <br />
                 <br />
                 <h:commandLink action="#{gameController.prepareList}" value="Cancel" immediate="true"/>

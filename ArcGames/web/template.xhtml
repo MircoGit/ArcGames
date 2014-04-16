@@ -20,6 +20,9 @@
         <c:if test="#{userController.sessionId != 0}">
             <h:form>
                 <h:commandLink action="#{userController.logout}" value="logout" immediate="true"/>
+                <h:outputText value=" #{userController.getCurrentUserName()}" />
+                <h:commandLink action="#{userController.editCurrentProfile()}" value="Profile..." immediate="true"/>
+
             </h:form>
         </c:if>
 

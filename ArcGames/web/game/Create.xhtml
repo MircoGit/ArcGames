@@ -23,7 +23,7 @@
                     <h:inputText id="link" value="#{gameController.selected.link}" title="#{bundle.CreateGameTitle_link}" />
                 </h:panelGrid>
                 <br />
-                <h:commandLink action="#{gameController.create}" value="#{bundle.CreateGameSaveLink}" />
+                <h:commandButton action="#{gameController.create}" value="#{bundle.CreateGameSaveLink}" />
                 <br />
                 <br />
                 <h:commandLink action="#{gameController.prepareList}" value="Cancel" immediate="true"/>

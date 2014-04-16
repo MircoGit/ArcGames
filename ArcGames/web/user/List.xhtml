@@ -17,8 +17,7 @@
 
                     <h:outputText value="Username : " />
                     <h:inputText id="search" value="#{userController.usernameSearch}"  />
-                    <h:commandLink action="#{userController.search}" value="Search"/>
-                    <h:commandLink action="#{userController.searchMode}" value="Advanced..."/>
+
                     <c:if test="#{userController.mode}">
                         <h:outputText value="Firstname : " />
                         <h:inputText id="firstNameSearch" value="#{userController.firstNameSearch}"  />
@@ -26,8 +25,12 @@
                         <h:inputText id="lastNameSearch" value="#{userController.lastNameSearch}"  />
                         <h:outputText value="Location : " />
                         <h:inputText id="locationSearch" value="#{userController.locationSearch}"  />
-                        <h:commandLink action="#{userController.advancedSearch}" value="Search"/>
+                        <h:commandButton action="#{userController.advancedSearch}" value="Search"/>
                     </c:if>
+                    <c:if test="#{!userController.mode}">
+                        <h:commandButton action="#{userController.search}" value="Search"/>
+                    </c:if>
+                    <h:commandButton action="#{userController.searchMode}" value="Advanced..."/>
                 </h:panelGrid>
             </h:form>
 
@@ -78,11 +81,11 @@
                                 <f:facet name="header">
                                     <h:outputText value="&nbsp;"/>
                                 </f:facet>
-                                <h:commandLink action="#{userController.prepareView}" value="#{bundle.ListUserViewLink}"/>
+                                <h:commandButton action="#{userController.prepareView}" value="#{bundle.ListUserViewLink}"/>
                                 <h:outputText value=" "/>
-                                <h:commandLink action="#{userController.prepareEdit}" value="#{bundle.ListUserEditLink}"/>
+                                <h:commandButton action="#{userController.prepareEdit}" value="#{bundle.ListUserEditLink}"/>
                                 <h:outputText value=" "/>
-                                <h:commandLink action="#{userController.destroy}" value="#{bundle.ListUserDestroyLink}"/>
+                                <h:commandButton action="#{userController.destroy}" value="#{bundle.ListUserDestroyLink}"/>
                             </h:column>
 
                         </c:if>

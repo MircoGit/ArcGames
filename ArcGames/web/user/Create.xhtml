@@ -32,10 +32,10 @@
                     <h:inputText id="lastName" value="#{userController.selected.lastName}" title="#{bundle.CreateUserTitle_lastName}" />
                 </h:panelGrid>
                 <br />
-                <h:commandLink action="#{userController.create}" value="#{bundle.CreateUserSaveLink}" />
+                <h:commandButton action="#{userController.create}" value="#{bundle.CreateUserSaveLink}" />
                 <br />
                 <br />
-                <h:link outcome="/news/List" value="Cancel"/>
+                <h:link outcome="/news/List" value="Back to homepage"/>
                 <br />
                 <br />
             </h:form>
