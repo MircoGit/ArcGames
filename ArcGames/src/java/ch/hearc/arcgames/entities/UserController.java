@@ -10,7 +10,6 @@ import java.util.ResourceBundle;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
-import javax.enterprise.context.spi.Context;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -20,12 +19,11 @@ import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
 import javax.faces.validator.ValidatorException;
-import org.apache.jasper.tagplugins.jstl.ForEach;
 
 @Named("userController")
 @SessionScoped
 public class UserController implements Serializable {
-
+    
     private User current;
     private DataModel items = null;
     @EJB
@@ -33,13 +31,13 @@ public class UserController implements Serializable {
     private PaginationHelper pagination;
     private int selectedItemIndex;
     String login;
-    String loginPasswd;
+    String loginPasswd; 
     int sessionId = 0;
     String usernameSearch = "";
     String firstNameSearch = "";
     String lastNameSearch = "";
     String locationSearch = "";
-    List<User> result = new ArrayList<User>();
+    List<User> result = new ArrayList();
     boolean mode = false;
 
     public String getLastNameSearch() {
