@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
     <ui:composition template="/template.xhtml">
         <ui:define name="title">
@@ -50,15 +51,21 @@
                             </f:facet>
                             <h:commandLink action="#{gameController.prepareView}" value="#{bundle.ListGameViewLink}"/>
                             <h:outputText value=" "/>
-                            <h:commandLink action="#{gameController.prepareEdit}" value="#{bundle.ListGameEditLink}"/>
-                            <h:outputText value=" "/>
-                            <h:commandLink action="#{gameController.destroy}" value="#{bundle.ListGameDestroyLink}"/>
+                            <c:if test="#{userController.isAdmin()}">
+
+                                <h:commandLink action="#{gameController.prepareEdit}" value="#{bundle.ListGameEditLink}"/>
+                                <h:outputText value=" "/>
+                                <h:commandLink action="#{gameController.destroy}" value="#{bundle.ListGameDestroyLink}"/>
+                            </c:if>
                         </h:column>
+
                     </h:dataTable>
                 </h:panelGroup>
                 <br />
-                <h:commandLink action="#{gameController.prepareCreate}" value="#{bundle.ListGameCreateLink}"/>
-                <br />
+                <c:if test="#{userController.isAdmin()}">
+                    <h:commandLink action="#{gameController.prepareCreate}" value="#{bundle.ListGameCreateLink}"/>
+                    <br />
+                </c:if>
                 <br />
                 <h:link outcome="/news/List" value="Back to homepage"/>
             </h:form>

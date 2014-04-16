@@ -4,6 +4,8 @@ import ch.hearc.arcgames.entities.util.JsfUtil;
 import ch.hearc.arcgames.entities.util.PaginationHelper;
 
 import java.io.Serializable;
+import java.util.Collections;
+import java.util.List;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
 import javax.inject.Named;
@@ -15,11 +17,14 @@ import javax.faces.convert.FacesConverter;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
+import javax.inject.Inject;
 
 @Named("newsController")
 @SessionScoped
 public class NewsController implements Serializable {
 
+    @Inject
+    private UserController uc;
     private News current;
     private DataModel items = null;
     @EJB
@@ -80,7 +85,7 @@ public class NewsController implements Serializable {
 
     public String create() {
         try {
-            current.getNewsPK().setUserid(current.getUser().getId());
+            current.getNewsPK().setUserid(uc.getSessionId());
             getFacade().create(current);
             JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("NewsCreated"));
             return prepareCreate();

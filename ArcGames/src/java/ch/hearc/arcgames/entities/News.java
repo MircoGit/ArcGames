@@ -5,6 +5,7 @@
 package ch.hearc.arcgames.entities;
 
 import java.io.Serializable;
+import java.util.Comparator;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -28,12 +29,13 @@ import java.util.Date;
 @Table(name = "News")
 @XmlRootElement
 @NamedQueries({
+    @NamedQuery(name = "News.orderByDate", query = "SELECT n FROM News n ORDER BY n.date DESC"),
     @NamedQuery(name = "News.findAll", query = "SELECT n FROM News n"),
     @NamedQuery(name = "News.findById", query = "SELECT n FROM News n WHERE n.newsPK.id = :id"),
     @NamedQuery(name = "News.findByTitle", query = "SELECT n FROM News n WHERE n.title = :title"),
     @NamedQuery(name = "News.findByDate", query = "SELECT n FROM News n WHERE n.date = :date"),
     @NamedQuery(name = "News.findByUserid", query = "SELECT n FROM News n WHERE n.newsPK.userid = :userid")})
-public class News implements Serializable {
+public class News implements Serializable, Comparable<News> {
 
     private static final long serialVersionUID = 1L;
     @EmbeddedId
@@ -144,4 +146,10 @@ public class News implements Serializable {
         this.date = new Date();
         date.setTime(date.getTime() + 3600 * 1000);
     }
+
+    @Override
+    public int compareTo(News n) {
+        return n.getDate().compareTo(this.date);
+    }
+
 }

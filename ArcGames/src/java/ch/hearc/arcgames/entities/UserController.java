@@ -23,7 +23,7 @@ import javax.faces.validator.ValidatorException;
 @Named("userController")
 @SessionScoped
 public class UserController implements Serializable {
-    
+
     private User current;
     private DataModel items = null;
     @EJB
@@ -31,7 +31,7 @@ public class UserController implements Serializable {
     private PaginationHelper pagination;
     private int selectedItemIndex;
     String login;
-    String loginPasswd; 
+    String loginPasswd;
     int sessionId = 0;
     String usernameSearch = "";
     String firstNameSearch = "";
@@ -371,5 +371,12 @@ public class UserController implements Serializable {
 
             }
         }
+    }
+
+    public boolean isAdmin() {
+        if (sessionId == 0) {
+            return false;
+        }
+        return getFacade().find(sessionId).getIsAdmin();
     }
 }

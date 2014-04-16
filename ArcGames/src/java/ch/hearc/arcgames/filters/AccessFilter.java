@@ -132,6 +132,13 @@ public class AccessFilter implements Filter {
 
             if (uc == null || uc.getSessionId() == 0) {
                 ((HttpServletResponse) response).sendRedirect("/ArcGames/faces/login.xhtml");
+            } else if ((page.equals("/ArcGames/faces/game/Create.xhtml")
+                    || page.equals("/ArcGames/faces/game/Edit.xhtml")
+                    || page.equals("/ArcGames/faces/news/Create.xhtml")
+                    || page.equals("/ArcGames/faces/news/Edit.xhtml"))) {
+                if (uc == null || !uc.isAdmin()) {
+                    ((HttpServletResponse) response).sendRedirect("/ArcGames/");
+                }
             }
         }
 

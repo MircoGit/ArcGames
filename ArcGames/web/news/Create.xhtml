@@ -20,9 +20,6 @@
                     <h:outputLabel value="#{bundle.CreateNewsLabel_content}" for="content" />
                     <h:inputTextarea rows="4" cols="30" id="content" value="#{newsController.selected.content}" title="#{bundle.CreateNewsTitle_content}" />
                     <h:outputLabel value="#{bundle.CreateNewsLabel_user}" for="user" />
-                    <h:selectOneMenu id="user" value="#{newsController.selected.user}" title="#{bundle.CreateNewsTitle_user}" required="true" requiredMessage="#{bundle.CreateNewsRequiredMessage_user}">
-                        <f:selectItems value="#{userController.itemsAvailableSelectOne}"/>
-                    </h:selectOneMenu>
                 </h:panelGrid>
                 <br />
                 <h:commandLink action="#{newsController.create}" value="#{bundle.CreateNewsSaveLink}" />
