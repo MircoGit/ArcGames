@@ -63,6 +63,7 @@ $(document).ready(function(){
 		if(nx == -1 || nx == width/cw || ny == -1 || ny == height/cw || check_collision(nx, ny, snake_array))
 		{
 			//restart game
+                        
                         $("#score").html(score);
 			init();
 			return;

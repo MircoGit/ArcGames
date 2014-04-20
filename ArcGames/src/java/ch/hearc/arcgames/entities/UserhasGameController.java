@@ -15,6 +15,7 @@ import javax.faces.convert.FacesConverter;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
+import javax.inject.Inject;
 
 @Named("userhasGameController")
 @SessionScoped
@@ -26,6 +27,12 @@ public class UserhasGameController implements Serializable {
     private ch.hearc.arcgames.entities.UserhasGameFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
+    
+    @Inject
+    private UserController uc;
+    
+    @Inject
+    private GameController gc;
 
     public UserhasGameController() {
     }
@@ -239,6 +246,34 @@ public class UserhasGameController implements Serializable {
             } else {
                 throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: " + UserhasGame.class.getName());
             }
+        }
+    }
+    
+    public void updateScore(String s)
+    {
+        if(s.equals("")) s = "0";
+        int score = Integer.valueOf(s);
+        UserhasGame newUhasG = new UserhasGame();
+        newUhasG.setUser(uc.getUser(uc.getSessionId()));
+        newUhasG.setGame(gc.getSelected());
+        newUhasG.setScore(score);
+        boolean find = false;
+        for(UserhasGame uhg : getFacade().findAll())
+        {
+            if(uhg.getGame().equals(newUhasG.getGame()) && uhg.getUser().equals(newUhasG.getUser()))
+            {
+                find = true;
+                if(newUhasG.getScore() > uhg.getScore())
+                {
+                    uhg.setScore(score);
+                }
+            }
+        }
+        if(!find){
+            newUhasG.setUserhasGamePK(new ch.hearc.arcgames.entities.UserhasGamePK());
+            newUhasG.getUserhasGamePK().setGameid(gc.getSelected().getId());
+            newUhasG.getUserhasGamePK().setUserid(uc.getSessionId());
+            getFacade().create(newUhasG);
         }
     }
 }

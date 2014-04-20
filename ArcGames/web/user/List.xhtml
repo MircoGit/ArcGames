@@ -25,11 +25,8 @@
                         <h:inputText id="lastNameSearch" value="#{userController.lastNameSearch}"  />
                         <h:outputText value="Location : " />
                         <h:inputText id="locationSearch" value="#{userController.locationSearch}"  />
-                        <h:commandButton action="#{userController.advancedSearch}" value="Search"/>
                     </c:if>
-                    <c:if test="#{!userController.mode}">
                         <h:commandButton action="#{userController.search}" value="Search"/>
-                    </c:if>
                     <h:commandButton action="#{userController.searchMode}" value="Advanced..."/>
                 </h:panelGrid>
             </h:form>

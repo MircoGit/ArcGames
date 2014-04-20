@@ -22,11 +22,8 @@
                         <h:outputText value="in description : " />
                         <h:inputText id="firstNameSearch" value="#{gameController.inGameDescriptionSearch}"  />
                         
-                        <h:commandButton action="#{gameController.advancedSearch}" value="Search"/>
                     </c:if>
-                    <c:if test="#{!gameController.mode}">
                         <h:commandButton action="#{gameController.search}" value="Search"/>
-                    </c:if>
                     <h:commandButton action="#{gameController.searchMode}" value="Advanced..."/>
                 </h:panelGrid>
             </h:form>

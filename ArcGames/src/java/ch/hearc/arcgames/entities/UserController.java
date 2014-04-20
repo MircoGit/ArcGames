@@ -37,7 +37,7 @@ public class UserController implements Serializable {
     String firstNameSearch = "";
     String lastNameSearch = "";
     String locationSearch = "";
-    List<User> result = new ArrayList();
+    int size;
     boolean mode = false;
 
     public String getLastNameSearch() {
@@ -120,23 +120,19 @@ public class UserController implements Serializable {
     }
 
     public PaginationHelper getPagination() {
-        if (mode) {
-            advancedSearch();
-        } else {
-            search();
-        }
+
         if (pagination == null) {
             pagination = new PaginationHelper(10) {
                 @Override
                 public int getItemsCount() {
-                    //return getFacade().count();
-                    return result.size();
+                    return size;
                 }
 
                 @Override
                 public DataModel createPageDataModel() {
-                    // return new ListDataModel(getFacade().findRange(new int[]{getPageFirstItem(), getPageFirstItem() + getPageSize()}));
-                    return new ListDataModel(result);
+                    DataModel dm = new ListDataModel(getFacade().findRangeSearch(usernameSearch,firstNameSearch,lastNameSearch,locationSearch, new int[]{getPageFirstItem(), getPageFirstItem() + getPageSize()}));
+                    size = dm.getRowCount();
+                    return dm;
                 }
             };
         }
@@ -344,34 +340,13 @@ public class UserController implements Serializable {
     }
 
     public void search() {
-        result.clear();
-        List<User> users = getFacade().findAll();
-        for (User u : users) {
-            if (u.getUsername().contains(usernameSearch) || usernameSearch.equals("")) {
-                result.add(u);
-            }
-        }
+        recreateModel();
     }
 
     public void searchMode() {
         mode = !mode;
     }
 
-    public void advancedSearch() {
-        result.clear();
-
-
-        List<User> users = getFacade().findAll();
-        for (User u : users) {
-            if ((u.getFirstName().toLowerCase().contains(firstNameSearch.toLowerCase()) || firstNameSearch.equals(""))
-                    && (u.getUsername().toLowerCase().contains(usernameSearch.toLowerCase()) || usernameSearch.equals(""))
-                    && (u.getLastName().toLowerCase().contains(lastNameSearch.toLowerCase()) || lastNameSearch.equals(""))
-                    && (u.getLocation().toLowerCase().contains(locationSearch.toLowerCase()) || locationSearch.equals(""))) {
-                result.add(u);
-
-            }
-        }
-    }
 
     public boolean isAdmin() {
         if (sessionId == 0) {

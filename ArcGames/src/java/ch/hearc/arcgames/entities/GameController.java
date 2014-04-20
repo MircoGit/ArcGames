@@ -29,14 +29,22 @@ public class GameController implements Serializable {
     private PaginationHelper pagination;
     private int selectedItemIndex;
     
+    boolean mode;
     String gameNameSearch = "";
     String inGameDescriptionSearch = "";
-    List<Game> result = new ArrayList();
-    boolean mode = false;
+    int size;
 
     public GameController() {
     }
 
+    public boolean isMode() {
+        return mode;
+    }
+
+    public void setMode(boolean mode) {
+        this.mode = mode;
+    }
+    
     public String getGameNameSearch() {
         return gameNameSearch;
     }
@@ -52,23 +60,6 @@ public class GameController implements Serializable {
     public void setInGameDescriptionSearch(String inGameDescriptionSearch) {
         this.inGameDescriptionSearch = inGameDescriptionSearch;
     }
-
-    public List<Game> getResult() {
-        return result;
-    }
-
-    public void setResult(List<Game> result) {
-        this.result = result;
-    }
-
-    public boolean isMode() {
-        return mode;
-    }
-
-    public void setMode(boolean mode) {
-        this.mode = mode;
-    }
-
     
     public Game getSelected() {
         if (current == null) {
@@ -83,23 +74,21 @@ public class GameController implements Serializable {
     }
 
     public PaginationHelper getPagination() {
-         if (mode) {
-            advancedSearch();
-        } else {
-            search();
-        }
+         
         if (pagination == null) {
             pagination = new PaginationHelper(10) {
                 @Override
                 public int getItemsCount() {
-                    //return getFacade().count();
-                    return result.size();
+                    return size;
+                    //return result.size();
                 }
 
                 @Override
                 public DataModel createPageDataModel() {
-                    //return new ListDataModel(getFacade().findRange(new int[]{getPageFirstItem(), getPageFirstItem() + getPageSize()}));
-                    return new ListDataModel(result);
+                    DataModel dm = new ListDataModel(getFacade().findRangeSearch(gameNameSearch, inGameDescriptionSearch, new int[]{getPageFirstItem(), getPageFirstItem() + getPageSize()}));
+                    size = dm.getRowCount();
+                    return dm;
+                    //}
                 }
             };
         }
@@ -276,31 +265,9 @@ public class GameController implements Serializable {
     }
     
     public void search() {
-        result.clear();
-        List<Game> games = getFacade().findAll();
-        for (Game g : games) {
-            if (g.getName().contains(gameNameSearch) || gameNameSearch.equals("")) {
-                result.add(g);
-            }
-        }
+        recreateModel();
     }
-
-    public void searchMode() {
+    public void searchMode(){
         mode = !mode;
     }
-
-    public void advancedSearch() {
-        result.clear();
-
-
-        List<Game> games = getFacade().findAll();
-        for (Game g : games) {
-            if ((g.getName().toLowerCase().contains(gameNameSearch.toLowerCase()) || gameNameSearch.equals(""))
-                    && (g.getDescription().toLowerCase().contains(inGameDescriptionSearch.toLowerCase()) || inGameDescriptionSearch.equals(""))) {
-                result.add(g);
-
-            }
-        }
-    }
-
 }

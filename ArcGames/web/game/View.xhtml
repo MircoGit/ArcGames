@@ -17,10 +17,12 @@
             <h:outputText value="#{gameController.selected.description}" title="#{bundle.ViewGameTitle_description}"/>
             <br />
             <canvas id="canvas" width="450" height="450"></canvas>
-            <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
-            <script src="../resources/games/#{gameController.selected.link}"></script>
+             <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
 
+            <h:outputScript library="games" name="#{gameController.selected.link}"/>
+            
             <div id="score">0</div>
+            #{userhasGameController.updateScore(score)}
             
             <h:form>
                 <h:commandLink action="#{gameController.prepareList}" value="#{bundle.ViewGameShowAllLink}"/>
