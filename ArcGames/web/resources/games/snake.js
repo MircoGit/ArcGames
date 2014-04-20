@@ -9,11 +9,14 @@ $(document).ready(function(){
 	var direction;
 	var food;
 	var score;
+        
+        var running;
 
 	var snake_array; //an array of cells to make up the snake
 	
 	function init()
 	{
+                running = true;
 		direction = "right"; //default direction
 		createSnake();
 		createFood(); 
@@ -54,7 +57,9 @@ $(document).ready(function(){
 		
 		var nx = snake_array[0].x;
 		var ny = snake_array[0].y;
-
+                
+            if(running)
+            {
 		if(direction == "right") nx++;
 		else if(direction == "left") nx--;
 		else if(direction == "up") ny--;
@@ -62,17 +67,19 @@ $(document).ready(function(){
 
 		if(nx == -1 || nx == width/cw || ny == -1 || ny == height/cw || check_collision(nx, ny, snake_array))
 		{
-			//restart game
+			//stop game
+                        running = false;
                         
-                        $("#score").html(score);
-			init();
 			return;
 		}
 
+            }
 		if(nx == food.x && ny == food.y)
 		{
 			var tail = {x: nx, y: ny};
 			score++;
+                        $('#score').val(score);
+                        $('#scoreVisible').html(score);
 			
 			createFood(); //Create new food
 		}
@@ -92,8 +99,16 @@ $(document).ready(function(){
 
 		paint_cell(food.x, food.y);
 
+if(running){
 		var score_text = "Score: " + score;
 		ctx.fillText(score_text, 5, height-5);
+}
+            else
+                {
+		var score_text = "Score: " + score;
+		ctx.fillText(score_text, width/2-10, height/2-5);
+                }
+            
 	}
 
 	function paint_cell(x, y)

@@ -16,6 +16,7 @@ import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
 import javax.inject.Inject;
+import javax.sound.midi.Soundbank;
 
 @Named("userhasGameController")
 @SessionScoped
@@ -249,14 +250,17 @@ public class UserhasGameController implements Serializable {
         }
     }
     
-    public void updateScore(String s)
+    public void updateScore()
     {
-        if(s.equals("")) s = "0";
-        int score = Integer.valueOf(s);
+        String value = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("score");
+        System.out.println(value);
+        int score = Integer.valueOf(value);
+        
         UserhasGame newUhasG = new UserhasGame();
         newUhasG.setUser(uc.getUser(uc.getSessionId()));
         newUhasG.setGame(gc.getSelected());
         newUhasG.setScore(score);
+        
         boolean find = false;
         for(UserhasGame uhg : getFacade().findAll())
         {
@@ -265,7 +269,10 @@ public class UserhasGameController implements Serializable {
                 find = true;
                 if(newUhasG.getScore() > uhg.getScore())
                 {
+                    uhg.getUserhasGamePK().setGameid(uhg.getGame().getId());
+                    uhg.getUserhasGamePK().setUserid(uhg.getUser().getId());
                     uhg.setScore(score);
+                    getFacade().edit(uhg);
                 }
             }
         }

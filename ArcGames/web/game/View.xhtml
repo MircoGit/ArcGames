@@ -21,13 +21,16 @@
 
             <h:outputScript library="games" name="#{gameController.selected.link}"/>
             
-            <div id="score">0</div>
-            #{userhasGameController.updateScore(score)}
+            <!--  style="display: none;" -->
+            <h:form id="scoreForm">
+                <input id="score" type="hidden" name="score" value="0" /> <!-- C'est ce tag que tu updates en meme temps que ton span (scoreForm:score) -->
+                <div id="scoreVisible">0</div><h:commandButton id="hiddenButton" action="#{userhasGameController.updateScore()}"  value="enregistrer" /> 
+                    
+            </h:form>
             
             <h:form>
                 <h:commandLink action="#{gameController.prepareList}" value="#{bundle.ViewGameShowAllLink}"/>
             </h:form>
         </ui:define>
     </ui:composition>
-
 </html>
