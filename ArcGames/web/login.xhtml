@@ -11,17 +11,15 @@
         </ui:define>
         <ui:define name="body">
             <h:form>
-                <h:panelGrid columns="2">
+                <h:panelGrid columns="2" styleClass="form">
                     <h:outputLabel value="login" for="login" />
                     <h:inputText id="login" title="Login" value="#{userController.login}" />
                     <h:outputLabel value="passwd" for="passwd" />
                     <h:inputSecret id="passwd" title="Passwd" value="#{userController.loginPasswd}" />
                 </h:panelGrid>
-
                 <br />
                 <h:commandButton value="Log in" type="submit" action="#{userController.checkLogin}" />
             </h:form>
-            
             <br />
             <h:link outcome="/news/List" value="Back to homepage"/>
 

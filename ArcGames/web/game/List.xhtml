@@ -11,32 +11,47 @@
             <h:outputText value="#{bundle.ListGameTitle}"></h:outputText>
         </ui:define>
         <ui:define name="body">
+            
+            <h:form>
+                <h:panelGrid columns="2" styleClass="form">
+
+                    <h:outputText value="game name : " />
+                    <h:inputText id="search" value="#{gameController.gameNameSearch}"  />
+
+                    <c:if test="#{gameController.mode}">
+                        <h:outputText value="in description : " />
+                        <h:inputText id="firstNameSearch" value="#{gameController.inGameDescriptionSearch}"  />
+                        
+                        <h:commandButton action="#{gameController.advancedSearch}" value="Search"/>
+                    </c:if>
+                    <c:if test="#{!gameController.mode}">
+                        <h:commandButton action="#{gameController.search}" value="Search"/>
+                    </c:if>
+                    <h:commandButton action="#{gameController.searchMode}" value="Advanced..."/>
+                </h:panelGrid>
+            </h:form>
+            
             <h:form styleClass="jsfcrud_list_form">
                 <h:panelGroup id="messagePanel" layout="block">
                     <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
                 </h:panelGroup>
                 <h:outputText escape="false" value="#{bundle.ListGameEmpty}" rendered="#{gameController.items.rowCount == 0}"/>
                 <h:panelGroup rendered="#{gameController.items.rowCount > 0}">
-                    <h:outputText value="#{gameController.pagination.pageFirstItem + 1}..#{gameController.pagination.pageLastItem + 1}/#{gameController.pagination.itemsCount}"/>&nbsp;
                     <h:commandLink action="#{gameController.previous}" value="#{bundle.Previous} #{gameController.pagination.pageSize}" rendered="#{gameController.pagination.hasPreviousPage}"/>&nbsp;
+                    <h:outputText value="#{gameController.pagination.pageFirstItem + 1}..#{gameController.pagination.pageLastItem + 1}/#{gameController.pagination.itemsCount}"/>&nbsp;
                     <h:commandLink action="#{gameController.next}" value="#{bundle.Next} #{gameController.pagination.pageSize}" rendered="#{gameController.pagination.hasNextPage}"/>&nbsp;
-                    <h:dataTable value="#{gameController.items}" var="item" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px">
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListGameTitle_name}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.name}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListGameTitle_description}"/>
-                            </f:facet>
+                    
+                <c:if test="#{userController.isAdmin()}">
+                    <br />
+                    <h:commandButton action="#{gameController.prepareCreate}" value="#{bundle.ListGameCreateLink}"/>
+                </c:if>
+                    <ui:repeat value="#{gameController.items}" var="item">
+                        <div class="list">
+                        <div class="left">
+                        <h2>#{item.name}</h2>
                             <h:outputText value="#{item.description}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="&nbsp;"/>
-                            </f:facet>
+                        </div>
+                        <div class="right">
                             <h:commandButton action="#{gameController.prepareView}" value="#{bundle.ListGameViewLink}"/>
                             <h:outputText value=" "/>
                             <c:if test="#{userController.isAdmin()}">
@@ -45,15 +60,15 @@
                                 <h:outputText value=" "/>
                                 <h:commandButton action="#{gameController.destroy}" value="#{bundle.ListGameDestroyLink}"/>
                             </c:if>
-                        </h:column>
-
-                    </h:dataTable>
+                        </div>
+                        </div>
+                    </ui:repeat>
+                    <h:commandLink action="#{gameController.previous}" value="#{bundle.Previous} #{gameController.pagination.pageSize}" rendered="#{gameController.pagination.hasPreviousPage}"/>&nbsp;
+                    <h:outputText value="#{gameController.pagination.pageFirstItem + 1}..#{gameController.pagination.pageLastItem + 1}/#{gameController.pagination.itemsCount}"/>&nbsp;
+                    <h:commandLink action="#{gameController.next}" value="#{bundle.Next} #{gameController.pagination.pageSize}" rendered="#{gameController.pagination.hasNextPage}"/>&nbsp;
+                    
                 </h:panelGroup>
                 <br />
-                <c:if test="#{userController.isAdmin()}">
-                    <h:commandButton action="#{gameController.prepareCreate}" value="#{bundle.ListGameCreateLink}"/>
-                    <br />
-                </c:if>
                 <br />
                 <h:link outcome="/news/List" value="Back to homepage"/>
             </h:form>

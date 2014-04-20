@@ -13,7 +13,7 @@
         <ui:define name="body">
 
             <h:form>
-                <h:panelGrid columns="2">
+                <h:panelGrid columns="2" styleClass="form">
 
                     <h:outputText value="Username : " />
                     <h:inputText id="search" value="#{userController.usernameSearch}"  />
@@ -34,62 +34,74 @@
                 </h:panelGrid>
             </h:form>
 
-            <h:form styleClass="jsfcrud_list_form">
+            <h:form >
                 <h:panelGroup id="messagePanel" layout="block">
                     <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
                 </h:panelGroup>
                 <h:outputText escape="false" value="#{bundle.ListUserEmpty}" rendered="#{userController.items.rowCount == 0}"/>
                 <h:panelGroup rendered="#{userController.items.rowCount > 0}">
-                    <h:outputText value="#{userController.pagination.pageFirstItem + 1}..#{userController.pagination.pageLastItem + 1}/#{userController.pagination.itemsCount}"/>&nbsp;
                     <h:commandLink action="#{userController.previous}" value="#{bundle.Previous} #{userController.pagination.pageSize}" rendered="#{userController.pagination.hasPreviousPage}"/>&nbsp;
+                    <h:outputText value="#{userController.pagination.pageFirstItem + 1}..#{userController.pagination.pageLastItem + 1}/#{userController.pagination.itemsCount}"/>&nbsp;
                     <h:commandLink action="#{userController.next}" value="#{bundle.Next} #{userController.pagination.pageSize}" rendered="#{userController.pagination.hasNextPage}"/>&nbsp;
-                    <h:dataTable value="#{userController.items}" var="item" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px">
-
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListUserTitle_username}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.username}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListUserTitle_mail}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.mail}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListUserTitle_location}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.location}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListUserTitle_firstName}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.firstName}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListUserTitle_lastName}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.lastName}"/>
-                        </h:column>
-
+                    
+                    <table class="order-table">
+    			<tr>
+    				<th class="order-table-header">username</th>
+    				<th class="order-table-header">mail</th>
+    				<th class="order-table-header">location</th>
+    				<th class="order-table-header">firstName</th>
+    				<th class="order-table-header">lastName</th>
                         <c:if test="#{userController.isAdmin()}">
-                            <h:column>
-                                <f:facet name="header">
-                                    <h:outputText value="&nbsp;"/>
-                                </f:facet>
+                                <th class="order-table-header">administration</th>
+                        </c:if>
+    			</tr>
+                    
+    			<tbody>
+                    <ui:repeat value="#{userController.items}" var="item" varStatus="status" >
+                        <h:panelGroup rendered="#{status.even}">
+                            <tr>
+                                    <td class="order-table-even-row">#{item.username}</td>
+                                    <td class="order-table-even-row">#{item.mail}</td>
+                                    <td class="order-table-even-row">#{item.location}</td>
+                                    <td class="order-table-even-row">#{item.firstName}</td>
+                                    <td class="order-table-even-row">#{item.lastName}</td>
+                        <c:if test="#{userController.isAdmin()}">
+                                <td class="order-table-even-row">
                                 <h:commandButton action="#{userController.prepareView}" value="#{bundle.ListUserViewLink}"/>
                                 <h:outputText value=" "/>
                                 <h:commandButton action="#{userController.prepareEdit}" value="#{bundle.ListUserEditLink}"/>
                                 <h:outputText value=" "/>
                                 <h:commandButton action="#{userController.destroy}" value="#{bundle.ListUserDestroyLink}"/>
-                            </h:column>
-
+                                </td>
                         </c:if>
-                    </h:dataTable>
+                            </tr>
+                        </h:panelGroup>
+                        <h:panelGroup rendered="#{status.odd}">
+                            <tr>
+                                    <td class="order-table-odd-row">#{item.username}</td>
+                                    <td class="order-table-odd-row">#{item.mail}</td>
+                                    <td class="order-table-odd-row">#{item.location}</td>
+                                    <td class="order-table-odd-row">#{item.firstName}</td>
+                                    <td class="order-table-odd-row">#{item.lastName}</td>
+                        <c:if test="#{userController.isAdmin()}">
+                                <td class="order-table-odd-row">
+                                <h:commandButton action="#{userController.prepareView}" value="#{bundle.ListUserViewLink}"/>
+                                <h:outputText value=" "/>
+                                <h:commandButton action="#{userController.prepareEdit}" value="#{bundle.ListUserEditLink}"/>
+                                <h:outputText value=" "/>
+                                <h:commandButton action="#{userController.destroy}" value="#{bundle.ListUserDestroyLink}"/>
+                                </td>
+                        </c:if>
+                            </tr>
+                        </h:panelGroup>
+                    </ui:repeat>
+                        
+    			</tbody>
+    		</table>
+                     <h:commandLink action="#{userController.previous}" value="#{bundle.Previous} #{userController.pagination.pageSize}" rendered="#{userController.pagination.hasPreviousPage}"/>&nbsp;
+                    <h:outputText value="#{userController.pagination.pageFirstItem + 1}..#{userController.pagination.pageLastItem + 1}/#{userController.pagination.itemsCount}"/>&nbsp;
+                    <h:commandLink action="#{userController.next}" value="#{bundle.Next} #{userController.pagination.pageSize}" rendered="#{userController.pagination.hasNextPage}"/>&nbsp;
+                    
                 </h:panelGroup>
                 <br />
                 <h:link outcome="/news/List" value="Back to homepage"/>

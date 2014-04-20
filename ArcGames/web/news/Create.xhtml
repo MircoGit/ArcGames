@@ -14,12 +14,11 @@
                 <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
             </h:panelGroup>
             <h:form>
-                <h:panelGrid columns="2">
+                <h:panelGrid columns="2" styleClass="form">
                     <h:outputLabel value="#{bundle.CreateNewsLabel_title}" for="title" />
                     <h:inputText id="title" value="#{newsController.selected.title}" title="#{bundle.CreateNewsTitle_title}" />
                     <h:outputLabel value="#{bundle.CreateNewsLabel_content}" for="content" />
                     <h:inputTextarea rows="4" cols="30" id="content" value="#{newsController.selected.content}" title="#{bundle.CreateNewsTitle_content}" />
-                    <h:outputLabel value="#{bundle.CreateNewsLabel_user}" for="user" />
                 </h:panelGrid>
                 <br />
                 <h:commandButton action="#{newsController.create}" value="#{bundle.CreateNewsSaveLink}" />

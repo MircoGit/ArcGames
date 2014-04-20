@@ -4,6 +4,8 @@ import ch.hearc.arcgames.entities.util.JsfUtil;
 import ch.hearc.arcgames.entities.util.PaginationHelper;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
 import javax.inject.Named;
@@ -26,10 +28,48 @@ public class GameController implements Serializable {
     private ch.hearc.arcgames.entities.GameFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
+    
+    String gameNameSearch = "";
+    String inGameDescriptionSearch = "";
+    List<Game> result = new ArrayList();
+    boolean mode = false;
 
     public GameController() {
     }
 
+    public String getGameNameSearch() {
+        return gameNameSearch;
+    }
+
+    public void setGameNameSearch(String gameNameSearch) {
+        this.gameNameSearch = gameNameSearch;
+    }
+
+    public String getInGameDescriptionSearch() {
+        return inGameDescriptionSearch;
+    }
+
+    public void setInGameDescriptionSearch(String inGameDescriptionSearch) {
+        this.inGameDescriptionSearch = inGameDescriptionSearch;
+    }
+
+    public List<Game> getResult() {
+        return result;
+    }
+
+    public void setResult(List<Game> result) {
+        this.result = result;
+    }
+
+    public boolean isMode() {
+        return mode;
+    }
+
+    public void setMode(boolean mode) {
+        this.mode = mode;
+    }
+
+    
     public Game getSelected() {
         if (current == null) {
             current = new Game();
@@ -43,16 +83,23 @@ public class GameController implements Serializable {
     }
 
     public PaginationHelper getPagination() {
+         if (mode) {
+            advancedSearch();
+        } else {
+            search();
+        }
         if (pagination == null) {
             pagination = new PaginationHelper(10) {
                 @Override
                 public int getItemsCount() {
-                    return getFacade().count();
+                    //return getFacade().count();
+                    return result.size();
                 }
 
                 @Override
                 public DataModel createPageDataModel() {
-                    return new ListDataModel(getFacade().findRange(new int[]{getPageFirstItem(), getPageFirstItem() + getPageSize()}));
+                    //return new ListDataModel(getFacade().findRange(new int[]{getPageFirstItem(), getPageFirstItem() + getPageSize()}));
+                    return new ListDataModel(result);
                 }
             };
         }
@@ -227,4 +274,33 @@ public class GameController implements Serializable {
             }
         }
     }
+    
+    public void search() {
+        result.clear();
+        List<Game> games = getFacade().findAll();
+        for (Game g : games) {
+            if (g.getName().contains(gameNameSearch) || gameNameSearch.equals("")) {
+                result.add(g);
+            }
+        }
+    }
+
+    public void searchMode() {
+        mode = !mode;
+    }
+
+    public void advancedSearch() {
+        result.clear();
+
+
+        List<Game> games = getFacade().findAll();
+        for (Game g : games) {
+            if ((g.getName().toLowerCase().contains(gameNameSearch.toLowerCase()) || gameNameSearch.equals(""))
+                    && (g.getDescription().toLowerCase().contains(inGameDescriptionSearch.toLowerCase()) || inGameDescriptionSearch.equals(""))) {
+                result.add(g);
+
+            }
+        }
+    }
+
 }

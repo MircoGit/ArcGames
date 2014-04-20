@@ -5,9 +5,10 @@ root {
 body {
     font-family: Arial, Helvetica, sans-serif;
     color: #3a4f54;
-    background-color: #dfecf1;
+    background-color: #f0f0ff;
     font-size: small;
 }
+
 
 a {
     color: #e33b06;
@@ -79,4 +80,61 @@ tr.jsfcrud_even_row {
     position: absolute;
     left: 50%;
     top: 50%;
+}
+
+
+
+.list{
+    border-top-style:inset;
+    font-style:italic;
+    max-width: 800px;
+}
+.left{
+    text-align: left;
+}
+.right {
+    text-align: right;
+    font-weight: bold;
+}
+.center{
+    text-align: center;
+    padding:10px;
+    border:5px solid gray;
+    margin:0px;
+    max-width: 800px;
+    margin:auto;
+}
+
+.title {
+    text-align: center;
+}
+
+.form {
+    margin:auto;
+    
+}
+
+.order-table{   
+	border-collapse:collapse; 
+        margin:auto;
+
+}
+
+.order-table-header{
+	text-align:center;
+	background:none repeat scroll 0 0 #E5E5E5;
+	border-bottom:1px solid #BBBBBB;
+	padding:16px;
+}
+
+.order-table-odd-row{
+	text-align:center;
+	background:none repeat scroll 0 0 #FFFFFFF;
+	border-top:1px solid #BBBBBB;
+}
+
+.order-table-even-row{
+	text-align:center;
+	background:none repeat scroll 0 0 #F9F9F9;
+	border-top:1px solid #BBBBBB;
 }

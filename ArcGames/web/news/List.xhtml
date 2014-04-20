@@ -11,11 +11,10 @@
             <h:outputText value="#{bundle.ListNewsTitle}"></h:outputText>
         </ui:define>
         <ui:define name="body">
-            <br />
-
             <h:link outcome="/game/List" value="Games"/>
             <br />
             <h:link outcome="/user/List" value="Users"/>
+            <br />
             <br />
 
             <h:form styleClass="jsfcrud_list_form">
@@ -24,57 +23,43 @@
                 </h:panelGroup>
                 <h:outputText escape="false" value="#{bundle.ListNewsEmpty}" rendered="#{newsController.items.rowCount == 0}"/>
                 <h:panelGroup rendered="#{newsController.items.rowCount > 0}">
-                    <h:outputText value="#{newsController.pagination.pageFirstItem + 1}..#{newsController.pagination.pageLastItem + 1}/#{newsController.pagination.itemsCount}"/>&nbsp;
                     <h:commandLink action="#{newsController.previous}" value="#{bundle.Previous} #{newsController.pagination.pageSize}" rendered="#{newsController.pagination.hasPreviousPage}"/>&nbsp;
+                    <h:outputText value="#{newsController.pagination.pageFirstItem + 1}..#{newsController.pagination.pageLastItem + 1}/#{newsController.pagination.itemsCount}"/>&nbsp;
                     <h:commandLink action="#{newsController.next}" value="#{bundle.Next} #{newsController.pagination.pageSize}" rendered="#{newsController.pagination.hasNextPage}"/>&nbsp;
 
-                    <h:dataTable value="#{newsController.items}" var="item" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px">
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListNewsTitle_title}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.title}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListNewsTitle_content}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.content}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListNewsTitle_date}"/>
-                            </f:facet>
+
+                <c:if test="#{userController.isAdmin()}">
+                    <br /><h:commandButton action="#{newsController.prepareCreate}" value="#{bundle.ListNewsCreateLink}"/>
+                </c:if>
+                    <ui:repeat value="#{newsController.items}" var="item">
+                        <div class="list">
+                       
+                            <div class ="left">
+                            <h2>#{item.title}</h2>
+                                <p>#{item.content}</p>
+                            </div>
+                        <div class="right">
+                          <h:outputText value="#{item.userName}"/>
+                            <br />
                             <h:outputText value="#{item.date}">
                                 <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
                             </h:outputText>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListNewsTitle_user}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.userName}"/>
-                        </h:column>
-
+                            <br />
                         <c:if test="#{userController.isAdmin()}">
-                            <h:column>
-                                <f:facet name="header">
-                                    <h:outputText value="&nbsp;"/>
-                                </f:facet>
                                 <h:commandButton action="#{newsController.prepareEdit}" value="#{bundle.ListNewsEditLink}"/>
                                 <h:outputText value=" "/>
                                 <h:commandButton action="#{newsController.destroy}" value="#{bundle.ListNewsDestroyLink}"/>
-                            </h:column>
 
                         </c:if>
-                    </h:dataTable>
+                        </div>
+                        </div>
+                    </ui:repeat>
+                    <h:commandLink action="#{newsController.previous}" value="#{bundle.Previous} #{newsController.pagination.pageSize}" rendered="#{newsController.pagination.hasPreviousPage}"/>&nbsp;
+                    <h:outputText value="#{newsController.pagination.pageFirstItem + 1}..#{newsController.pagination.pageLastItem + 1}/#{newsController.pagination.itemsCount}"/>&nbsp;
+                    <h:commandLink action="#{newsController.next}" value="#{bundle.Next} #{newsController.pagination.pageSize}" rendered="#{newsController.pagination.hasNextPage}"/>&nbsp;
 
 
                 </h:panelGroup>
-                <br />
-                <c:if test="#{userController.isAdmin()}">
-                    <h:commandButton action="#{newsController.prepareCreate}" value="#{bundle.ListNewsCreateLink}"/>
-                </c:if>
             </h:form>
         </ui:define>
     </ui:composition>

@@ -8,21 +8,25 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <title><ui:insert name="title">Default Title</ui:insert></title>
         <h:outputStylesheet name="css/jsfcrud.css"/>
+       
     </h:head>
-
     <h:body>
-
+        <div class="title"><h1>ArcGames</h1>
+        
         <c:if test="#{userController.sessionId == 0}">
             <h:link outcome="/login" value="Log in"/>
             <h:outputText value=" " />
             <h:link outcome="/user/Create" value="Sign up"/>
-        </c:if>
+        </c:if></div>
+        <br />
+        <div class ="center">
         <c:if test="#{userController.sessionId != 0}">
-            <h:form>
+            <h:form> 
+                <h:commandLink action="#{userController.editCurrentProfile()}" value="#{userController.getCurrentUserName()}" immediate="true"/>
+                <h:outputText value="  "/>
                 <h:commandLink action="#{userController.logout}" value="logout" immediate="true"/>
-                <h:outputText value=" #{userController.getCurrentUserName()}" />
-                <h:commandLink action="#{userController.editCurrentProfile()}" value="Profile..." immediate="true"/>
-
+                
+               
             </h:form>
         </c:if>
 
@@ -35,6 +39,7 @@
         <p>
             <ui:insert name="body">Default Body</ui:insert>
         </p>
+        </div>
     </h:body>
 
 </html>
