@@ -37,6 +37,14 @@ public class GameController implements Serializable {
     public GameController() {
     }
 
+    public int getSize() {
+        return size;
+    }
+
+    public void setSize(int size) {
+        this.size = size;
+    }
+
     public boolean isMode() {
         return mode;
     }
@@ -80,15 +88,11 @@ public class GameController implements Serializable {
                 @Override
                 public int getItemsCount() {
                     return size;
-                    //return result.size();
                 }
 
                 @Override
                 public DataModel createPageDataModel() {
-                    DataModel dm = new ListDataModel(getFacade().findRangeSearch(gameNameSearch, inGameDescriptionSearch, new int[]{getPageFirstItem(), getPageFirstItem() + getPageSize()}));
-                    size = dm.getRowCount();
-                    return dm;
-                    //}
+                    return new ListDataModel(getFacade().findRangeSearch(gameNameSearch, inGameDescriptionSearch, new int[]{getPageFirstItem(), getPageFirstItem() + getPageSize()}));
                 }
             };
         }

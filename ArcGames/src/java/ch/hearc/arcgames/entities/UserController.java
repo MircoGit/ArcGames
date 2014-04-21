@@ -40,6 +40,14 @@ public class UserController implements Serializable {
     int size;
     boolean mode = false;
 
+    public int getSize() {
+        return size;
+    }
+
+    public void setSize(int size) {
+        this.size = size;
+    }
+
     public String getLastNameSearch() {
         return lastNameSearch;
     }
@@ -130,9 +138,7 @@ public class UserController implements Serializable {
 
                 @Override
                 public DataModel createPageDataModel() {
-                    DataModel dm = new ListDataModel(getFacade().findRangeSearch(usernameSearch,firstNameSearch,lastNameSearch,locationSearch, new int[]{getPageFirstItem(), getPageFirstItem() + getPageSize()}));
-                    size = dm.getRowCount();
-                    return dm;
+                    return new ListDataModel(getFacade().findRangeSearch(usernameSearch,firstNameSearch,lastNameSearch,locationSearch, new int[]{getPageFirstItem(), getPageFirstItem() + getPageSize()}));
                 }
             };
         }

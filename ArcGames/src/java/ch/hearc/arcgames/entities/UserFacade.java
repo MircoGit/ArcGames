@@ -6,6 +6,7 @@ package ch.hearc.arcgames.entities;
 
 import java.util.List;
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -18,6 +19,9 @@ public class UserFacade extends AbstractFacade<User> {
     @PersistenceContext(unitName = "ArcGamesPU")
     private EntityManager em;
 
+    @Inject
+    UserController uc;
+    
     @Override
     protected EntityManager getEntityManager() {
         return em;
@@ -92,9 +96,10 @@ public class UserFacade extends AbstractFacade<User> {
         }
         else
         {
-            return findRange(range);
+            q = getEntityManager().createQuery("SELECT u FROM User u");
         }
         
+        uc.setSize(q.getResultList().size());
         q.setMaxResults(range[1] - range[0]);
         q.setFirstResult(range[0]);
         return q.getResultList();

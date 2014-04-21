@@ -6,6 +6,7 @@ package ch.hearc.arcgames.entities;
 
 import java.util.List;
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -17,6 +18,9 @@ import javax.persistence.PersistenceContext;
 public class GameFacade extends AbstractFacade<Game> {
     @PersistenceContext(unitName = "ArcGamesPU")
     private EntityManager em;
+    
+    @Inject
+    GameController gc;
 
     @Override
     protected EntityManager getEntityManager() {
@@ -31,7 +35,7 @@ public class GameFacade extends AbstractFacade<Game> {
         javax.persistence.Query q;
         if(name.equals("") && description.equals(""))
         {
-            return findRange(range);
+            q = getEntityManager().createQuery("SELECT g FROM Game g");
         }
         else if(name.equals(""))
         {
@@ -45,6 +49,8 @@ public class GameFacade extends AbstractFacade<Game> {
         {
             q = getEntityManager().createQuery("SELECT g FROM Game g WHERE g.name LIKE '%"+name+"%' AND g.description LIKE '%"+description+"%'");
         }
+        
+        gc.setSize(q.getResultList().size());
         q.setMaxResults(range[1] - range[0]);
         q.setFirstResult(range[0]);
         return q.getResultList();
