@@ -26,8 +26,8 @@
                         <h:outputText value="Location : " />
                         <h:inputText id="locationSearch" value="#{userController.locationSearch}"  />
                     </c:if>
-                        <h:commandButton action="#{userController.search}" value="Search"/>
-                    <h:commandButton action="#{userController.searchMode}" value="Advanced..."/>
+                        <h:commandButton id="submit" action="#{userController.search}" value="Search"/>
+                    <h:commandButton id="advenced" action="#{userController.searchMode}" value="Advanced..."/>
                 </h:panelGrid>
             </h:form>
 

@@ -23,8 +23,8 @@
                         <h:inputText id="firstNameSearch" value="#{gameController.inGameDescriptionSearch}"  />
                         
                     </c:if>
-                        <h:commandButton action="#{gameController.search}" value="Search"/>
-                    <h:commandButton action="#{gameController.searchMode}" value="Advanced..."/>
+                        <h:commandButton id="submit" action="#{gameController.search}" value="Search"/>
+                    <h:commandButton id="advenced" action="#{gameController.searchMode}" value="Advanced..."/>
                 </h:panelGrid>
             </h:form>
             

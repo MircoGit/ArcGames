@@ -21,7 +21,7 @@
                     <h:inputTextarea rows="4" cols="30" id="content" value="#{newsController.selected.content}" title="#{bundle.CreateNewsTitle_content}" />
                 </h:panelGrid>
                 <br />
-                <h:commandButton action="#{newsController.create}" value="#{bundle.CreateNewsSaveLink}" />
+                <h:commandButton id="submit" action="#{newsController.create}" value="#{bundle.CreateNewsSaveLink}" />
                 <br />
                 <br />
                 <h:commandLink action="#{newsController.prepareList}" value="#{bundle.CreateNewsShowAllLink}" immediate="true"/>

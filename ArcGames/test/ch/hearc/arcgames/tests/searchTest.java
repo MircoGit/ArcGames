@@ -9,6 +9,7 @@ import com.thoughtworks.selenium.Selenium;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+import static javax.ws.rs.client.Entity.form;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import org.junit.After;
@@ -26,33 +27,26 @@ import org.openqa.selenium.firefox.FirefoxDriver;
  *
  * @author Mirco
  */
-public class AdminSecurityTest {
-    
+public class searchTest {
+
     private Selenium selenium;
     private WebDriver driver;
     private String baseUrl;
     private boolean acceptNextAlert = true;
     private StringBuffer verificationErrors = new StringBuffer();
-    private List<String> adminUrlList = new ArrayList<String>(); // List of admin URLs
 
-    public AdminSecurityTest() {
+    public searchTest() {
     }
-    
+
     @Before
     public void setUp() throws Exception {
         driver = new FirefoxDriver();
         baseUrl = "http://localhost:8080/";
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-
-        // Feeding list of URLs
-        adminUrlList.add("ArcGames/faces/news/Create.xhtml");
-        adminUrlList.add("ArcGames/faces/game/Create.xhtml");
-        adminUrlList.add("ArcGames/faces/news/Edit.xhtml");
-        adminUrlList.add("ArcGames/faces/game/Edit.xhtml");
     }
-    
+
     @Test
-    public void nonAdminTryAccessAdminPages() throws Exception {
+    public void loggedUserTryAccessPages() throws Exception {
 
         // Non-admin user login informations
         String username = "nonAdmin";
@@ -64,43 +58,20 @@ public class AdminSecurityTest {
         // Login as non-admin
         login(username, passwd);
 
-        // Try to access non-allowed admin pages
-        for (String page : adminUrlList) {
-            String adminUrl = baseUrl + page;
-            driver.get(adminUrl);
-            assertNotEquals(driver.getCurrentUrl(), adminUrl);
-        }
+        // Search user that matches "fake1" pattern
+        driver.findElement(By.linkText("Users")).click();
+        driver.findElement(By.id("j_idt18:search")).clear();
+        driver.findElement(By.id("j_idt18:search")).sendKeys("fake1");
+        driver.findElement(By.id("j_idt18:submit")).click();
+        
+        // Check results
+        
 
         // Logout
         driver.findElement(By.linkText("logout")).click();
-        
+
     }
-    
-    @Test
-    public void adminAccessAdminPages() throws Exception {
 
-        // Non-admin user login informations
-        String username = "Admin";
-        String passwd = "123456";
-
-        // We open the web app
-        driver.get(baseUrl + "/ArcGames/");
-
-        // Login as admin
-        login(username, passwd);
-
-        // Try to access non-allowed admin pages
-        for (String page : adminUrlList) {
-            String adminUrl = baseUrl + page;
-            driver.get(adminUrl);
-            assertEquals(driver.getCurrentUrl(), adminUrl);
-        }
-
-        // Logout
-        driver.findElement(By.linkText("logout")).click();
-        
-    }
-    
     @After
     public void tearDown() throws Exception {
         driver.quit();
@@ -109,7 +80,7 @@ public class AdminSecurityTest {
             fail(verificationErrorString);
         }
     }
-    
+
     private boolean isElementPresent(By by) {
         try {
             driver.findElement(by);
@@ -118,7 +89,7 @@ public class AdminSecurityTest {
             return false;
         }
     }
-    
+
     private boolean isAlertPresent() {
         try {
             driver.switchTo().alert();
@@ -127,7 +98,7 @@ public class AdminSecurityTest {
             return false;
         }
     }
-    
+
     private String closeAlertAndGetItsText() {
         try {
             Alert alert = driver.switchTo().alert();
@@ -142,7 +113,7 @@ public class AdminSecurityTest {
             acceptNextAlert = true;
         }
     }
-    
+
     private void login(String username, String passwd) {
         driver.findElement(By.linkText("Log in")).click();
         driver.findElement(By.id("j_idt19:login")).clear();

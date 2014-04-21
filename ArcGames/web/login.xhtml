@@ -18,7 +18,7 @@
                     <h:inputSecret id="passwd" title="Passwd" value="#{userController.loginPasswd}" />
                 </h:panelGrid>
                 <br />
-                <h:commandButton value="Log in" type="submit" action="#{userController.checkLogin}" />
+                <h:commandButton id="submit" value="Log in" type="submit" action="#{userController.checkLogin}" />
             </h:form>
             <br />
             <h:link outcome="/news/List" value="Back to homepage"/>
