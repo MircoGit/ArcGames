@@ -56,7 +56,7 @@ public class searchTest {
         driver.get(baseUrl + "/ArcGames/");
         
         // SignUp with a test user
-        String tmp = "fake1";
+        String tmp = "fake";
         signUp(tmp, tmp, tmp, tmp, tmp, tmp);
 
         // Login as non-admin
@@ -65,11 +65,12 @@ public class searchTest {
         // Search user that matches "fake1" pattern
         driver.findElement(By.linkText("Users")).click();
         driver.findElement(By.id("j_idt18:search")).clear();
-        driver.findElement(By.id("j_idt18:search")).sendKeys("fake1");
+        driver.findElement(By.id("j_idt18:search")).sendKeys(tmp);
         driver.findElement(By.id("j_idt18:submit")).click();
 
         // Check results
-        assertEquals("fake1", driver.findElement(By.xpath("//form[@id='j_idt21']/table/tbody[2]/tr/td")).getText());
+        String result = driver.findElement(By.xpath("//form[@id='j_idt21']/table/tbody[2]/tr/td")).getText();
+        assertTrue(result.contains(tmp));
 
         // Logout
         driver.findElement(By.linkText("logout")).click();
