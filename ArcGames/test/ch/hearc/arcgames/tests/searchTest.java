@@ -54,23 +54,30 @@ public class searchTest {
 
         // We open the web app
         driver.get(baseUrl + "/ArcGames/");
-        
+
         // SignUp with a test user
-        String tmp = "fake";
-        signUp(tmp, tmp, tmp, tmp, tmp, tmp);
+        String pattern = "fake";
+        signUp(pattern, pattern, pattern, pattern, pattern, pattern);
 
         // Login as non-admin
         login(username, passwd);
 
-        // Search user that matches "fake1" pattern
+        // Go to users page
         driver.findElement(By.linkText("Users")).click();
-        driver.findElement(By.id("j_idt18:search")).clear();
-        driver.findElement(By.id("j_idt18:search")).sendKeys(tmp);
-        driver.findElement(By.id("j_idt18:submit")).click();
+
+        // Search user that matches "fake" pattern
+        simpleSearch(pattern);
 
         // Check results
         String result = driver.findElement(By.xpath("//form[@id='j_idt21']/table/tbody[2]/tr/td")).getText();
-        assertTrue(result.contains(tmp));
+        assertTrue(result.contains(pattern));
+
+        // Search user that matches "fake" user
+        advancedSearch(pattern);
+
+        // Check results
+        result = driver.findElement(By.xpath("//form[@id='j_idt21']/table/tbody[2]/tr/td")).getText();
+        assertTrue(result.contains(pattern));
 
         // Logout
         driver.findElement(By.linkText("logout")).click();
@@ -145,5 +152,24 @@ public class searchTest {
         driver.findElement(By.id("j_idt19:passwd")).clear();
         driver.findElement(By.id("j_idt19:passwd")).sendKeys(passwd);
         driver.findElement(By.id("j_idt19:submit")).click();
+    }
+
+    private void simpleSearch(String pattern) {
+        driver.findElement(By.id("j_idt18:search")).clear();
+        driver.findElement(By.id("j_idt18:search")).sendKeys(pattern);
+        driver.findElement(By.id("j_idt18:submit")).click();
+    }
+
+    private void advancedSearch(String pattern) {
+        driver.findElement(By.id("j_idt18:advenced")).click();
+        driver.findElement(By.id("j_idt18:search")).clear();
+        driver.findElement(By.id("j_idt18:search")).sendKeys(pattern);
+        driver.findElement(By.id("j_idt18:firstNameSearch")).clear();
+        driver.findElement(By.id("j_idt18:firstNameSearch")).sendKeys(pattern);
+        driver.findElement(By.id("j_idt18:lastNameSearch")).clear();
+        driver.findElement(By.id("j_idt18:lastNameSearch")).sendKeys(pattern);
+        driver.findElement(By.id("j_idt18:locationSearch")).clear();
+        driver.findElement(By.id("j_idt18:locationSearch")).sendKeys(pattern);
+        driver.findElement(By.id("j_idt18:submit")).click();
     }
 }
