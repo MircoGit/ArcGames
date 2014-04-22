@@ -20,9 +20,9 @@
                     <h:outputLabel value="#{bundle.CreateUserLabel_mail}" for="mail" />
                     <h:inputText id="mail" value="#{userController.selected.mail}" title="#{bundle.CreateUserTitle_mail}" required="true" requiredMessage="#{bundle.CreateUserRequiredMessage_mail}"/>
                     <h:outputLabel value="#{bundle.CreateUserLabel_passwd}" for="passwd" />
-                    <h:inputSecret id="passwd" value="" title="#{bundle.CreateUserTitle_passwd}" />
+                    <h:inputSecret id="passwd" title="#{bundle.CreateUserTitle_passwd}" />
                     <h:outputLabel value="Password confirm" for="passwdConfirm" />
-                    <h:inputSecret id="passwdConfirm" value="" title="PasswordConfirm" />
+                    <h:inputSecret id="passwdConfirm" title="PasswordConfirm" />
                     <h:outputLabel value="#{bundle.CreateUserLabel_location}" for="location" />
                     <h:inputText id="location" value="#{userController.selected.location}" title="#{bundle.CreateUserTitle_location}" />
                     <h:outputLabel value="#{bundle.CreateUserLabel_firstName}" for="firstName" />
@@ -31,7 +31,7 @@
                     <h:inputText id="lastName" value="#{userController.selected.lastName}" title="#{bundle.CreateUserTitle_lastName}" />
                 </h:panelGrid>
                 <br />
-                <h:commandButton id="submit" action="#{userController.create}" value="#{bundle.CreateUserSaveLink}" />
+                <h:commandButton id="submit" action="#{userController.update}" value="#{bundle.EditUserSaveLink}" />
                 <br />
                 <br />
                 <h:link outcome="/news/List" value="Cancel"/>
