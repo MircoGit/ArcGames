@@ -54,6 +54,10 @@ public class searchTest {
 
         // We open the web app
         driver.get(baseUrl + "/ArcGames/");
+        
+        // SignUp with a test user
+        String tmp = "fake1";
+        signUp(tmp, tmp, tmp, tmp, tmp, tmp);
 
         // Login as non-admin
         login(username, passwd);
@@ -63,9 +67,9 @@ public class searchTest {
         driver.findElement(By.id("j_idt18:search")).clear();
         driver.findElement(By.id("j_idt18:search")).sendKeys("fake1");
         driver.findElement(By.id("j_idt18:submit")).click();
-        
+
         // Check results
-        
+        assertEquals("fake1", driver.findElement(By.xpath("//form[@id='j_idt21']/table/tbody[2]/tr/td")).getText());
 
         // Logout
         driver.findElement(By.linkText("logout")).click();
@@ -112,6 +116,25 @@ public class searchTest {
         } finally {
             acceptNextAlert = true;
         }
+    }
+
+    private void signUp(String username, String mail, String passwd, String location, String firstName, String lastName) {
+        driver.findElement(By.linkText("Sign up")).click();
+        driver.findElement(By.id("j_idt18:username")).clear();
+        driver.findElement(By.id("j_idt18:username")).sendKeys(username);
+        driver.findElement(By.id("j_idt18:mail")).clear();
+        driver.findElement(By.id("j_idt18:mail")).sendKeys(mail);
+        driver.findElement(By.id("j_idt18:passwd")).clear();
+        driver.findElement(By.id("j_idt18:passwd")).sendKeys(passwd);
+        driver.findElement(By.id("j_idt18:passwdConfirm")).clear();
+        driver.findElement(By.id("j_idt18:passwdConfirm")).sendKeys(passwd);
+        driver.findElement(By.id("j_idt18:location")).clear();
+        driver.findElement(By.id("j_idt18:location")).sendKeys(location);
+        driver.findElement(By.id("j_idt18:firstName")).clear();
+        driver.findElement(By.id("j_idt18:firstName")).sendKeys(firstName);
+        driver.findElement(By.id("j_idt18:lastName")).clear();
+        driver.findElement(By.id("j_idt18:lastName")).sendKeys(lastName);
+        driver.findElement(By.id("j_idt18:submit")).click();
     }
 
     private void login(String username, String passwd) {
